@@ -1,4 +1,4 @@
-function JoinGamePage() {
+export default function JoinGamePage() {
   return (
     <div className="hero bg-base-200 min-h-svh">
       <div className="hero-content text-center">
@@ -13,5 +13,3 @@ function JoinGamePage() {
     </div>
   );
 }
-
-export default JoinGamePage;

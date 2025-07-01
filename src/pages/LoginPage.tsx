@@ -3,12 +3,11 @@ import { useAuth } from '@/hooks/useAuth';
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router';
 
-function LoginPage() {
+export default function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const { loading, user, signInWithGoogle } = useAuth();
-  const searchParams = new URLSearchParams(location.search);
-  const redirectTo = searchParams.get('redirectTo') ?? '/';
+  const redirectTo = new URLSearchParams(location.search).get('redirectTo') ?? '/';
 
   useEffect(() => {
     if (!loading && user) {
@@ -18,7 +17,7 @@ function LoginPage() {
 
   const handleSignInWithGoogle = async () => {
     await signInWithGoogle({ redirectTo });
-  }
+  };
 
   return (
     <div className="hero bg-base-200 min-h-svh">
@@ -33,5 +32,3 @@ function LoginPage() {
     </div>
   );
 }
-
-export default LoginPage;

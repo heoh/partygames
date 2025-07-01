@@ -1,4 +1,4 @@
-function CreateGamePage() {
+export default function CreateGamePage() {
   return (
     <div className="hero bg-base-200 min-h-svh">
       <div className="hero-content text-center">
@@ -13,5 +13,3 @@ function CreateGamePage() {
     </div>
   );
 }
-
-export default CreateGamePage;

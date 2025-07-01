@@ -1,6 +1,6 @@
-import { useNavigate } from "react-router";
+import { useNavigate } from 'react-router';
 
-function HomePage() {
+export default function HomePage() {
   const navigate = useNavigate();
   const handleEnterButton = () => {
     navigate('/join');
@@ -14,11 +14,11 @@ function HomePage() {
           <p className="py-6">
             <input type="text" placeholder="게임 PIN" className="input input-lg text-center" />
           </p>
-          <button className="btn btn-primary" onClick={handleEnterButton}>입장하기</button>
+          <button className="btn btn-primary" onClick={handleEnterButton}>
+            입장하기
+          </button>
         </div>
       </div>
     </div>
   );
 }
-
-export default HomePage;

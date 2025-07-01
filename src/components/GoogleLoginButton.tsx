@@ -4,7 +4,7 @@ type GoogleLoginButtonProps = {
   onClick: () => void;
 };
 
-function GoogleLoginButton({ onClick }: GoogleLoginButtonProps) {
+export default function GoogleLoginButton({ onClick }: GoogleLoginButtonProps) {
   return (
     <button
       onClick={onClick}
@@ -15,5 +15,3 @@ function GoogleLoginButton({ onClick }: GoogleLoginButtonProps) {
     </button>
   );
 }
-
-export default GoogleLoginButton;
