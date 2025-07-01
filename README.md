@@ -67,3 +67,10 @@ export default tseslint.config([
   },
 ])
 ```
+
+## Setting `.env`
+`.env`:
+```
+VITE_SUPABASE_PROJECT_URL=${Enter your Supabase Project URL}
+VITE_SUPABASE_KEY=${Enter your Supabase API Key}
+```
