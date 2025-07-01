@@ -25,11 +25,8 @@ export default function CreateGamePage() {
       <div className="hero bg-base-200 min-h-svh">
         <div className="hero-content text-center">
           <div className="max-w-md">
-            <h1 className="text-5xl font-bold">Create Game</h1>
-            <p className="py-6">
-              <input type="text" placeholder="Game PIN" className="input input-lg text-center" />
-            </p>
-            <button className="btn btn-primary">Create</button>
+            <h1 className="text-5xl font-bold">Partygames</h1>
+            <button className="btn btn-primary">방 만들기</button>
           </div>
         </div>
       </div>

@@ -18,7 +18,7 @@ export default function JoinGamePage() {
     <div>
       <PageHeader
         menu={[
-          { text: '입장 취소', onClick: handleGoBack },
+          { text: '돌아가기', onClick: handleGoBack },
           ...(user ? [{ text: '로그아웃', onClick: handleSignOut }] : []),
         ]}
       />

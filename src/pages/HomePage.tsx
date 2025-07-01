@@ -1,11 +1,20 @@
 import PageHeader from '@/components/PageHeader';
 import { useAuth } from '@/hooks/useAuth';
 import { closeActiveDropdown } from '@/shared/util';
+import { useForm, type SubmitHandler } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 
+interface FormInput {
+  roomId: string;
+}
+
 export default function HomePage() {
+  const { register, handleSubmit } = useForm<FormInput>();
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
+  const onSubmit: SubmitHandler<FormInput> = (data) => {
+    navigate(`/join?roomId=${data.roomId}`);
+  };
   const handleCreateGame = () => {
     navigate('/create');
   };
@@ -15,9 +24,6 @@ export default function HomePage() {
   const handleSignOut = () => {
     closeActiveDropdown();
     signOut();
-  };
-  const handleEnter = () => {
-    navigate('/join');
   };
 
   return (
@@ -33,12 +39,14 @@ export default function HomePage() {
         <div className="hero-content text-center">
           <div className="max-w-md">
             <h1 className="text-5xl font-bold">Partygames</h1>
-            <p className="py-6">
-              <input type="text" placeholder="게임 PIN" className="input input-lg text-center" />
-            </p>
-            <button className="btn btn-primary" onClick={handleEnter}>
-              입장하기
-            </button>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <p className="py-6">
+                <input {...register('roomId')} type="text" placeholder="게임 PIN" className="input input-lg text-center" />
+              </p>
+              <button className="btn btn-primary" type="submit">
+                입장하기
+              </button>
+            </form>
           </div>
         </div>
       </div>
