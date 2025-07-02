@@ -1,17 +1,29 @@
 import PageHeader from '@/components/PageHeader';
 import { useAuth } from '@/hooks/useAuth';
+import { useGameList, type Game } from '@/hooks/useGameList';
 import { closeActiveDropdown } from '@/shared/util';
+import GameSelector from './GameSelector';
+import { useState } from 'react';
 import { useNavigate } from 'react-router';
+import { useForm, type SubmitHandler } from 'react-hook-form';
+
+interface FormInput {}
 
 export default function CreateGamePage() {
+  const { register, handleSubmit } = useForm<FormInput>();
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
+  const games = useGameList();
+  const [game, setGame] = useState<Game | undefined>();
   const handleGoHome = () => {
     navigate('/');
   };
   const handleSignOut = () => {
     closeActiveDropdown();
     signOut();
+  };
+  const onSubmit: SubmitHandler<FormInput> = (data) => {
+    alert(game?.id);
   };
 
   return (
@@ -26,7 +38,12 @@ export default function CreateGamePage() {
         <div className="hero-content text-center">
           <div className="max-w-md">
             <h1 className="text-5xl font-bold">Partygames</h1>
-            <button className="btn btn-primary">방 만들기</button>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="py-6">
+                <GameSelector games={games} onChange={setGame} />
+              </div>
+              <button className="btn btn-primary">방 만들기</button>
+            </form>
           </div>
         </div>
       </div>
