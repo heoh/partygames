@@ -10,7 +10,7 @@ import { useForm, type SubmitHandler } from 'react-hook-form';
 interface FormInput {}
 
 export default function CreateGamePage() {
-  const { register, handleSubmit } = useForm<FormInput>();
+  const { handleSubmit } = useForm<FormInput>();
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
   const games = useGameList();
@@ -22,7 +22,7 @@ export default function CreateGamePage() {
     closeActiveDropdown();
     signOut();
   };
-  const onSubmit: SubmitHandler<FormInput> = (data) => {
+  const onSubmit: SubmitHandler<FormInput> = () => {
     alert(game?.id);
   };
 
