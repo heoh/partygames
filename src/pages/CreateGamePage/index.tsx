@@ -1,16 +1,19 @@
 import PageHeader from '@/components/PageHeader';
 import { useAuth } from '@/hooks/useAuth';
-import { useGameList, type Game } from '@/hooks/useGameList';
+import { useGameList } from '@/hooks/useGameList';
+import type { Game } from '@/models/Game';
 import { closeActiveDropdown } from '@/shared/util';
 import GameSelector from './GameSelector';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 
-interface FormInput {}
+interface FormInput {
+  observerMode: boolean;
+}
 
 export default function CreateGamePage() {
-  const { handleSubmit } = useForm<FormInput>();
+  const { register, handleSubmit } = useForm<FormInput>();
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
   const games = useGameList();
@@ -22,8 +25,8 @@ export default function CreateGamePage() {
     closeActiveDropdown();
     signOut();
   };
-  const onSubmit: SubmitHandler<FormInput> = () => {
-    alert(game?.id);
+  const onSubmit: SubmitHandler<FormInput> = (data) => {
+    alert(`${data.observerMode} ${game?.id}`);
   };
 
   return (
@@ -41,6 +44,12 @@ export default function CreateGamePage() {
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="py-6">
                 <GameSelector games={games} onChange={setGame} />
+                <fieldset className="fieldset bg-base-100 border-base-300 rounded-box w-64 border p-4 m-auto">
+                  <label className="label select-none">
+                    <input {...register('observerMode')} type="checkbox" className="checkbox" />
+                    호스트 관전
+                  </label>
+                </fieldset>
               </div>
               <button className="btn btn-primary">방 만들기</button>
             </form>

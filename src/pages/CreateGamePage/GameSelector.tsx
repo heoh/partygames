@@ -1,4 +1,4 @@
-import type { Game } from '@/hooks/useGameList';
+import type { Game } from '@/models/Game';
 import { createRef, useEffect, useMemo, useRef, useState } from 'react';
 
 type GameSelectorProps = {

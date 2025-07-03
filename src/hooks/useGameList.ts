@@ -1,10 +1,5 @@
+import type { Game } from '@/models/Game';
 import { useBasename } from './useBasename';
-
-export type Game = {
-  id: string;
-  name: string;
-  imageUrl: string;
-};
 
 export function useGameList() {
   const basename = useBasename();
