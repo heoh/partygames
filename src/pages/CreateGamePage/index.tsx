@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 
 interface FormInput {
-  roomName?: string;
+  gameName?: string;
   observerMode: boolean;
 }
 
@@ -27,7 +27,7 @@ export default function CreateGamePage() {
     signOut();
   };
   const onSubmit: SubmitHandler<FormInput> = (data) => {
-    alert(`${data.roomName} ${data.observerMode} ${gameType?.id}`);
+    alert(`${data.gameName} ${data.observerMode} ${gameType?.id}`);
   };
 
   return (
@@ -46,7 +46,7 @@ export default function CreateGamePage() {
               <div className="py-6">
                 <GameSelector gameTypes={gameTypes} onChange={setGameType} />
                 <fieldset className="fieldset bg-base-100 border-base-300 rounded-box w-64 border p-4 m-auto">
-                  <input {...register('roomName')} type="text" placeholder="방 이름" className="input" />
+                  <input {...register('gameName')} type="text" placeholder="게임 이름" className="input" />
                   <label className="label select-none">
                     <input {...register('observerMode')} type="checkbox" className="checkbox" />
                     호스트 관전

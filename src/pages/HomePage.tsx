@@ -5,7 +5,7 @@ import { useForm, type SubmitHandler } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 
 interface FormInput {
-  roomId: string;
+  gamePin: string;
 }
 
 export default function HomePage() {
@@ -13,7 +13,7 @@ export default function HomePage() {
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
   const onSubmit: SubmitHandler<FormInput> = (data) => {
-    navigate(`/join?roomId=${data.roomId}`);
+    navigate(`/join?pin=${data.gamePin}`);
   };
   const handleCreateGame = () => {
     navigate('/create');
@@ -41,7 +41,7 @@ export default function HomePage() {
             <h1 className="text-5xl font-bold">Partygames</h1>
             <form onSubmit={handleSubmit(onSubmit)}>
               <p className="py-6">
-                <input {...register('roomId')} type="text" placeholder="게임 PIN" className="input input-lg text-center" />
+                <input {...register('gamePin')} type="text" placeholder="게임 PIN" className="input input-lg text-center" />
               </p>
               <button className="btn btn-primary" type="submit">
                 입장하기
