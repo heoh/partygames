@@ -1,7 +1,7 @@
 import PageHeader from '@/components/PageHeader';
 import { useAuth } from '@/hooks/useAuth';
-import { useGameList } from '@/hooks/useGameList';
-import type { Game } from '@/models/Game';
+import { useGameTypeList } from '@/hooks/useGameTypeList';
+import type { GameType } from '@/models/GameType';
 import { closeActiveDropdown } from '@/shared/util';
 import GameSelector from './GameSelector';
 import { useState } from 'react';
@@ -17,8 +17,8 @@ export default function CreateGamePage() {
   const { register, handleSubmit } = useForm<FormInput>();
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
-  const games = useGameList();
-  const [game, setGame] = useState<Game | undefined>();
+  const gameTypes = useGameTypeList();
+  const [gameType, setGameType] = useState<GameType | undefined>();
   const handleGoHome = () => {
     navigate('/');
   };
@@ -27,7 +27,7 @@ export default function CreateGamePage() {
     signOut();
   };
   const onSubmit: SubmitHandler<FormInput> = (data) => {
-    alert(`${data.roomName} ${data.observerMode} ${game?.id}`);
+    alert(`${data.roomName} ${data.observerMode} ${gameType?.id}`);
   };
 
   return (
@@ -44,7 +44,7 @@ export default function CreateGamePage() {
             <h1 className="text-5xl font-bold">Partygames</h1>
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="py-6">
-                <GameSelector games={games} onChange={setGame} />
+                <GameSelector gameTypes={gameTypes} onChange={setGameType} />
                 <fieldset className="fieldset bg-base-100 border-base-300 rounded-box w-64 border p-4 m-auto">
                   <input {...register('roomName')} type="text" placeholder="방 이름" className="input" />
                   <label className="label select-none">

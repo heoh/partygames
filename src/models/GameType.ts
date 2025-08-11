@@ -1,10 +1,10 @@
-export type Game = {
+export type GameType = {
   id: string;
   name: string;
   imageUrl: string;
 };
 
-export const games: Game[] = [
+export const gameTypes: GameType[] = [
   {
     id: 'mind_match',
     name: '통했어!',

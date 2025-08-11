@@ -1,26 +1,26 @@
-import type { Game } from '@/models/Game';
+import type { GameType } from '@/models/GameType';
 import { createRef, useEffect, useMemo, useRef, useState } from 'react';
 
-type GameSelectorProps = {
-  games: Game[];
-  value?: Game;
-  onChange?: (value?: Game) => void;
+type GameTypeSelectorProps = {
+  gameTypes: GameType[];
+  value?: GameType;
+  onChange?: (value?: GameType) => void;
 };
 
-export default function GameSelector({ games, value, onChange }: GameSelectorProps) {
+export default function GameSelector({ gameTypes, value, onChange }: GameTypeSelectorProps) {
   const [selection, setSelection] = useState<number>(-1);
   const carouselRef = useRef<HTMLDivElement>(null);
-  const itemRefs = useMemo(() => games.map(() => createRef<HTMLDivElement>()), [games]);
+  const itemRefs = useMemo(() => gameTypes.map(() => createRef<HTMLDivElement>()), [gameTypes]);
 
   const scrollTo = (index: number) => {
     carouselRef.current?.scrollTo({ left: itemRefs.at(index)?.current?.offsetLeft });
   };
   const handleNext = () => {
-    const nextIndex = (selection + 1) % games.length;
+    const nextIndex = (selection + 1) % gameTypes.length;
     scrollTo(nextIndex);
   };
   const handlePrev = () => {
-    const prevIndex = (selection - 1 + games.length) % games.length;
+    const prevIndex = (selection - 1 + gameTypes.length) % gameTypes.length;
     scrollTo(prevIndex);
   };
 
@@ -33,7 +33,7 @@ export default function GameSelector({ games, value, onChange }: GameSelectorPro
             if (index != selection) {
               setSelection(index);
               if (onChange) {
-                onChange(games.at(index));
+                onChange(gameTypes.at(index));
               }
             }
           }
@@ -44,22 +44,22 @@ export default function GameSelector({ games, value, onChange }: GameSelectorPro
     itemRefs.forEach((ref) => observer.observe(ref.current as Element));
 
     return () => observer.disconnect();
-  }, [games, selection]);
+  }, [gameTypes, selection]);
 
   useEffect(() => {
-    const index = value ? games.indexOf(value) : -1;
+    const index = value ? gameTypes.indexOf(value) : -1;
     if (index != -1 && index != selection) {
       setSelection(index);
       scrollTo(index);
     }
-  }, [games, value]);
+  }, [gameTypes, value]);
 
   return (
     <div className="relative">
       <div ref={carouselRef} className="carousel rounded-box w-64 h-64">
-        {games.map((game, i) => (
+        {gameTypes.map((gameType, i) => (
           <div key={`game${i}`} id={`game${i}`} ref={itemRefs[i]} className="carousel-item w-full">
-            <img src={game.imageUrl} className="w-full" alt={game.name} />
+            <img src={gameType.imageUrl} className="w-full" alt={gameType.name} />
           </div>
         ))}
       </div>
