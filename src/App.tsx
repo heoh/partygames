@@ -3,6 +3,7 @@ import { Route, Routes, useNavigate } from 'react-router';
 import HomePage from '@/pages/HomePage';
 import CreateGamePage from '@/pages/CreateGamePage';
 import JoinGamePage from '@/pages/JoinGamePage';
+import GamePage from '@/pages/GamePage';
 import LoginPage from '@/pages/LoginPage';
 import RequireAuth from '@/components/RequireAuth';
 import { AUTH_CALLBACK_PATH, AuthCallback } from '@/hooks/useAuth';
@@ -25,6 +26,7 @@ function App() {
       <Route index element={<HomePage />} />
       <Route path={AUTH_CALLBACK_PATH} element={<AuthCallback />} />
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/game" element={<RequireAuth><GamePage /></RequireAuth>} />
       <Route path="/create" element={<RequireAuth><CreateGamePage /></RequireAuth>} />
       <Route path="/join" element={<RequireAuth><JoinGamePage /></RequireAuth>} />
     </Routes>

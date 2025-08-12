@@ -3,10 +3,12 @@ import { useAuth } from '@/hooks/useAuth';
 import { useGameTypeList } from '@/hooks/useGameTypeList';
 import type { GameType } from '@/models/GameType';
 import { closeActiveDropdown } from '@/shared/util';
+import { LoadingOverlay } from '@/components/LoadingOverlay';
 import GameSelector from './GameSelector';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useForm, type SubmitHandler } from 'react-hook-form';
+import { toast } from 'sonner';
 
 interface FormInput {
   gameName?: string;
@@ -14,6 +16,7 @@ interface FormInput {
 }
 
 export default function CreateGamePage() {
+  const [loading, setLoading] = useState(false);
   const { register, handleSubmit } = useForm<FormInput>();
   const { user, signOut } = useAuth();
   const navigate = useNavigate();
@@ -26,12 +29,30 @@ export default function CreateGamePage() {
     closeActiveDropdown();
     signOut();
   };
-  const onSubmit: SubmitHandler<FormInput> = (data) => {
+  const onSubmit: SubmitHandler<FormInput> = async (data) => {
+    if (!gameType) {
+      toast.error('게임 유형을 선택하세요.');
+      return;
+    }
+    if (!data.gameName) {
+      toast.error('게임 이름을 입력하세요.');
+      return;
+    }
+
+    setLoading(true);
+
+    // try {
+    //   await createGame(data.gameName, gameType?.id, host);
+    //   await createPlayer(gameId, uid);
+    // }
     alert(`${data.gameName} ${data.observerMode} ${gameType?.id}`);
+
+    // setLoading(false);
   };
 
   return (
     <div>
+      <LoadingOverlay isOpen={loading} />
       <PageHeader
         menu={[
           { text: '게임 참가', onClick: handleGoHome },
