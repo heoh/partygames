@@ -13,10 +13,9 @@ function App() {
 
   useEffect(() => {
     (async () => {
-      const { data, error } = await supabase.from('players').select().eq('is_playing', true);
-      const player = data?.at(0);
-      if (!error && player) {
-        navigate(`/game?pin=${player.game_address}`, { replace: true });
+      const gamePin = await getPlayingGamePin();
+      if (gamePin) {
+        navigate(`/game?pin=${gamePin}`, { replace: true });
       }
     })();
   }, []);
@@ -33,3 +32,9 @@ function App() {
 }
 
 export default App;
+
+async function getPlayingGamePin() {
+  const { data, error } = await supabase.from('players').select().eq('is_playing', true);
+  const player = data?.at(0);
+  return (!error && player) ? player.game_address : undefined;
+}
