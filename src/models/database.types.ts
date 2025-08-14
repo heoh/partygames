@@ -8,7 +8,7 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instanciate createClient with right options
+  // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
     PostgrestVersion: "12.2.12 (cd3cf9e)"
@@ -23,10 +23,10 @@ export type Database = {
     Functions: {
       graphql: {
         Args: {
+          extensions?: Json
           operationName?: string
           query?: string
           variables?: Json
-          extensions?: Json
         }
         Returns: Json
       }
@@ -44,32 +44,32 @@ export type Database = {
         Row: {
           address: string | null
           created_at: string | null
-          heartbeat_at: string | null
           host: string | null
           id: string
           is_playing: boolean | null
           name: string
           state: Json | null
+          updated_at: string | null
         }
         Insert: {
           address?: string | null
           created_at?: string | null
-          heartbeat_at?: string | null
           host?: string | null
           id?: string
           is_playing?: boolean | null
           name: string
           state?: Json | null
+          updated_at?: string | null
         }
         Update: {
           address?: string | null
           created_at?: string | null
-          heartbeat_at?: string | null
           host?: string | null
           id?: string
           is_playing?: boolean | null
           name?: string
           state?: Json | null
+          updated_at?: string | null
         }
         Relationships: []
       }
@@ -81,6 +81,7 @@ export type Database = {
           id: string
           receiver: string | null
           sender: string | null
+          updated_at: string | null
         }
         Insert: {
           created_at?: string | null
@@ -89,6 +90,7 @@ export type Database = {
           id?: string
           receiver?: string | null
           sender?: string | null
+          updated_at?: string | null
         }
         Update: {
           created_at?: string | null
@@ -97,6 +99,7 @@ export type Database = {
           id?: string
           receiver?: string | null
           sender?: string | null
+          updated_at?: string | null
         }
         Relationships: [
           {
@@ -127,34 +130,34 @@ export type Database = {
           created_at: string | null
           game_address: string | null
           game_id: string | null
-          heartbeat_at: string | null
           id: string
           is_playing: boolean | null
           nickname: string
           state: Json | null
           uid: string | null
+          updated_at: string | null
         }
         Insert: {
           created_at?: string | null
           game_address?: string | null
           game_id?: string | null
-          heartbeat_at?: string | null
           id?: string
           is_playing?: boolean | null
           nickname: string
           state?: Json | null
           uid?: string | null
+          updated_at?: string | null
         }
         Update: {
           created_at?: string | null
           game_address?: string | null
           game_id?: string | null
-          heartbeat_at?: string | null
           id?: string
           is_playing?: boolean | null
           nickname?: string
           state?: Json | null
           uid?: string | null
+          updated_at?: string | null
         }
         Relationships: [
           {
