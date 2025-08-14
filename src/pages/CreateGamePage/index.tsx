@@ -9,9 +9,11 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { toast } from 'sonner';
+import { createGame, joinGame } from '@/models/api';
 
 interface FormInput {
-  gameName?: string;
+  gameName: string;
+  nickname: string;
   observerMode: boolean;
 }
 
@@ -30,6 +32,10 @@ export default function CreateGamePage() {
     signOut();
   };
   const onSubmit: SubmitHandler<FormInput> = async (data) => {
+    if (!user) {
+      toast.error('사용자를 찾을 수 없습니다. 다시 접속해주세요.');
+      return;
+    }
     if (!gameType) {
       toast.error('게임 유형을 선택하세요.');
       return;
@@ -38,16 +44,34 @@ export default function CreateGamePage() {
       toast.error('게임 이름을 입력하세요.');
       return;
     }
+    if (!data.observerMode && !data.nickname) {
+      toast.error('닉네임을 입력하세요.');
+      return;
+    }
 
     setLoading(true);
 
-    // try {
-    //   await createGame(data.gameName, gameType?.id, host);
-    //   await createPlayer(gameId, uid);
-    // }
-    alert(`${data.gameName} ${data.observerMode} ${gameType?.id}`);
+    let game;
+    try {
+      game = await createGame(data.gameName, gameType, user);
+    } catch (e) {
+      console.log(e);
+      toast.error('게임 생성 실패. 잠시 후 다시 시도해주세요.');
+      setLoading(false);
+      return;
+    }
 
-    // setLoading(false);
+    let player;
+    try {
+      player = await joinGame(user, game.address!, data.nickname);
+    } catch (e) {
+      console.log(e);
+      toast.error('게임 참가 실패. 잠시 후 다시 시도해주세요.');
+      setLoading(false);
+      return;
+    }
+
+    navigate(`/game?pin=${game.address}`);
   };
 
   return (
@@ -68,6 +92,7 @@ export default function CreateGamePage() {
                 <GameSelector gameTypes={gameTypes} onChange={setGameType} />
                 <fieldset className="fieldset bg-base-100 border-base-300 rounded-box w-64 border p-4 m-auto">
                   <input {...register('gameName')} type="text" placeholder="게임 이름" className="input" />
+                  <input {...register('nickname')} type="text" placeholder="닉네임" className="input" />
                   <label className="label select-none">
                     <input {...register('observerMode')} type="checkbox" className="checkbox" />
                     호스트 관전
