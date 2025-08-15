@@ -7,7 +7,7 @@ export type GameType = {
 export const gameTypes: GameType[] = [
   {
     id: 'mind_match',
-    name: '통했어!',
+    name: '너도? 나도!',
     imageUrl: '/images/game_mind_match.png',
   },
   {
