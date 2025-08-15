@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { useForm, type SubmitHandler } from 'react-hook-form';
 import { toast } from 'sonner';
-import { createGame, joinGame } from '@/models/api';
+import { createGame, getPlayingPlayer, joinGame } from '@/models/api';
 
 interface FormInput {
   gameName: string;
@@ -51,6 +51,19 @@ export default function CreateGamePage() {
 
     setLoading(true);
 
+    try {
+      const player = await getPlayingPlayer(user);
+      if (player) {
+        navigate(`/game?pin=${player.game_address}`, { replace: true });
+        return;
+      }
+    } catch (e) {
+      console.log(e);
+      toast.error('플레이어 찾기 실패. 잠시 후 다시 시도해주세요.');
+      setLoading(false);
+      return;
+    }
+
     let game;
     try {
       game = await createGame(data.gameName, gameType, user);
@@ -71,7 +84,7 @@ export default function CreateGamePage() {
       return;
     }
 
-    navigate(`/game?pin=${game.address}`);
+    navigate(`/game?pin=${game.address}`, { replace: true });
   };
 
   return (
